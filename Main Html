@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	 <link rel="stylesheet" href="test1.css">
+	
+	<title >Hello World</title>
+</head>
+
+<body>
+<header class="site-header">
+<img src="logo.png" alt="Cecilia's Homemade Foodies" class="logo">
+
+  <nav>
+    <ul class="nav-links">
+      <li><a class = "active">HOME</a></li>
+      <li><a class = "drop">MENU</a></li>
+      <li><a class = "drop">REQUEST</a></li>
+      <li><a class = "drop">ABOUT US</a></li>
+      <a><img src="Sample.svg" alt="Company logo" width="30px" height="30px"></a>
+    </ul>
+  </nav>  
+</header>
+
+
+
+<main>
+<a><img src="image.png" alt="img" width="500px" height="250px"></a>
+<h1>Welcome to Cecilia's Homemade Foodies!</h1>
+<p>We are a small business that specializes in homemade food. Our mission is to provide delicious</p>
+</main>
+
+<footer>  
+  <div class="footer-content">
+    <ul class="foot-ish">
+<li><div class="block" id = "id"> &copy; 2024 Cecilia's Homemade Foodies. All rights reserved.</div></li>
+
+<li></li><div class="block" id = "id">block 2</div></li>
+
+<li></li><div class="block" id = "id">follow us:</div></li>
+
+</ul>
+ </div>
+
+</footer>
+
+</body>
+</html>
