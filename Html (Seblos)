@@ -1,1 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="Heading">
+        <img src="2ac4b5c85a1671095b82569cd94871526b25d008.png">
+        <p>HOME</p>
+        <p>MENU</p>
+        <p>REQUEST</p>
+        <p><u>ABOUT US</u></p>
+
+    </div>
+    <h1><b>About Us</b></h1>
+    <div class="About">
+
+        <img
+            src="https://scontent.fmnl11-1.fna.fbcdn.net/v/t39.30808-6/809026726_1701077948688919_7030260800664011680_n.jpg?stp=dst-jpg_tt6&cstp=mx1536x2048&ctp=s1536x2048&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=iMu3vPUZDs4Q7kNvwGVRKiu&_nc_oc=AdrAD7nRorpQSljnB4UifD0qdNkR5Bj54n7ASQw3it_qgHtYJtCJJY4WWJhdCiv66Mc&_nc_zt=23&_nc_ht=scontent.fmnl11-1.fna&_nc_gid=a8n3zRYY-dGwrZnK-d2PUQ&_nc_ss=7b289&oh=00_AQOA1is4MuByRBsJaEJqGpjq9hk8gvXtH8iJybbksaxq0Q&oe=6AC6B4A1">
+        <img
+            src="https://scontent.fmnl43-1.fna.fbcdn.net/v/t39.30808-6/830435425_1710955757701138_3722832906387571568_n.jpg?stp=c0.169.1536.1536a_dst-jpg_tt6&cstp=mx1536x1536&ctp=s206x206&_nc_cat=104&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=50ad20&_nc_ohc=bHMufcmmbHMQ7kNvwEodpJ9&_nc_oc=AdrDuTauAKWheW2Z389M6NFmlh8rkt1KCbn-86ykho9KhTjF-g1U3lrzmEzYAgifRAU&_nc_zt=23&_nc_ht=scontent.fmnl43-1.fna&_nc_gid=ILVr2McRMW5vsLBglS45BA&_nc_ss=7b289&oh=00_AQPnqGegTMwKJ74nHfPqGWMtjnoqujyGelhu47W2btykew&oe=6AC7DFC7">
+        <img
+            src="https://scontent.fmnl43-1.fna.fbcdn.net/v/t39.30808-6/828364085_1710126571117390_7150710218754971001_n.jpg?stp=c0.169.1536.1536a_dst-jpg_tt6&cstp=mx1536x1536&ctp=s206x206&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=50ad20&_nc_ohc=RsT0Bl0DYugQ7kNvwHIUBY2&_nc_oc=AdqK5dLL-sRwjkQnLOYqw1PAZTB7ggplaeHxolBTVXxpNrv-HZmspNK3pm1ZX3kVVts&_nc_zt=23&_nc_ht=scontent.fmnl43-1.fna&_nc_gid=5O4pY9eomsS-X0sbVJD_7g&_nc_ss=7b289&oh=00_AQMPFk5gnXcw8-pXbvOkr4PjyMA4qw9mxlMdWIBv_su7FQ&oe=6AC7C509">
+        <p>
+            Cecilia Homemade Foodies is a home-based food business that started on July 23, 2020. It was created to
+            provide delicious and affordable homemade food that customers can enjoy for lunch, snacks, or special
+            occasions. The business accepts online orders and prepares food in packages that are perfect for family
+            gatherings, celebrations, and everyday cravings. Through homemade flavors and quality service, Cecilia
+            Homemade Foodies continues to bring comforting and satisfying food to its customers.
+        </p>
+    </div>
+
+    <div class="Footer"><img src="FOOTER.jpg"></div>
+</body>
+
+</html>
