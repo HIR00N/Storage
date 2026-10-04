@@ -1,1 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide-Up Container</title>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
 
+  .btn1 {
+    border-width: 1;
+    border-radius: 50px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    margin-top: 1%;
+    /* No z-index, no position — sits in normal flow under the blur */
+  }
+
+  .containerWrap {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 550px;
+    z-index: 950;
+    pointer-events: none;
+  }
+
+  .box1,
+  .box2,
+  .box3 {
+    background-color: #ffffff;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid black;
+    padding: 0;
+    width: 600px;
+    height: 550px;
+    border-radius: 25px;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .box1.show,
+  .box2.show,
+  .box3.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    z-index: 1;
+  }
+
+  .cartHead,
+  .checkoutHead,
+  .orderInfoHead {
+    background-color: #ffb4c2;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    border-bottom: 1px solid #d0c9b8;
+    box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 15px;
+    height: 60px;
+    box-sizing: border-box;
+  }
+
+  .cartHead {
+    justify-content: space-between;
+  }
+
+  .checkoutHead {
+    justify-content: space-between;
+  }
+
+  .cartHead h2,
+  .checkoutHead h2,
+  .orderInfoHead h2 {
+    text-align: left;
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .btnX {
+    font-size: 22px;
+    border-color: #ffffff;
+    cursor: pointer;
+    background-color: #ffb4c2;
+    border-width: 0;
+    margin-right: 5px;
+    color: #000;
+    transition: color 0.2s ease;
+  }
+
+  .btnX:hover {
+    color: #ff0000;
+  }
+
+  .btnBack {
+    font-size: 26px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: #000;
+    margin-left: 0;
+    margin-right: 12px;
+    padding: 0 6px;
+    line-height: 1;
+    transition: color 0.2s ease, transform 0.15s ease;
+    transform-origin: center;
+  }
+
+  .btnBack:hover {
+    color: #ff0000;
+    transform: scale(1.15);
+  }
+
+  .cartScroll {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .cartScroll::before,
+  .cartScroll::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 24px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 1;
+  }
+
+  .cartScroll::before {
+    top: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .cartScroll::after {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .cartScroll.can-scroll-up::before { opacity: 1; }
+  .cartScroll.can-scroll-down::after { opacity: 1; }
+
+  .cartItems {
+    height: 100%;
+    overflow-y: auto;
+    padding: 0 25px 15px 25px;
+    text-align: left;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .cartItems::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .emptyCart {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+    text-align: center;
+    color: #888;
+    pointer-events: none;
+  }
+
+  .emptyCart.show {
+    display: flex;
+    pointer-events: auto;
+  }
+
+  .emptyCart .emptyIcon {
+    font-size: 56px;
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+
+  .emptyCart .emptyTitle {
+    font-size: 20px;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 6px;
+  }
+
+  .emptyCart .emptyText {
+    font-size: 13px;
+    color: #999;
+    line-height: 1.5;
+  }
+
+  .cartItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+
+  .cartItem::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(to right, rgba(180,180,180,0) 0%, rgba(180,180,180,0.6) 20%, rgba(180,180,180,0.6) 80%, rgba(180,180,180,0) 100%);
+    pointer-events: none;
+  }
+
+  .cartItem:last-child::after { display: none; }
+
+  .removeBtn {
+    margin-right: 40px;
+    margin-left: -5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fc97aa;
+    font-size: 16px;
+    line-height: 1;
+    padding: 4px;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, color 0.15s ease;
+  }
+
+  .removeBtn:hover { color: #ff0000; }
+
+  .itemInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .itemName { font-weight: bold; }
+
+  .itemDesc {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .qty {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .qty button {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid #999;
+    background-color: #fff;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+  }
+
+  .qty button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .qty span {
+    min-width: 18px;
+    text-align: center;
+  }
+
+  .itemPrice {
+    width: 70px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .cartFoot {
+    flex-shrink: 0;
+    padding: 12px 25px;
+    background-color: #ffffff;
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid #d0c9b8;
+    box-shadow: 0 -4px 8px -4px rgba(0, 0, 0, 0.25);
+  }
+
+  .totals {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .totals .row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .totals .row.grand {
+    font-weight: bold;
+    font-size: 16px;
+    border-top: 1px solid #d0c9b8;
+    padding-top: 6px;
+    margin-top: 4px;
+  }
+
+  .checkoutBtn {
+    background-color: #ffb4c2;
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid black;
+    width: 100%;
+    font-size: 15px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transform-origin: center;
+  }
+
+  .checkoutBtn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .checkoutBtn:active { transform: scale(0.99); }
+
+  .checkoutScroll {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .checkoutScroll::before,
+  .checkoutScroll::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 24px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 1;
+  }
+
+  .checkoutScroll::before {
+    top: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .checkoutScroll::after {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .checkoutScroll.can-scroll-up::before { opacity: 1; }
+  .checkoutScroll.can-scroll-down::after { opacity: 1; }
+
+  .checkoutBody {
+    height: 100%;
+    padding: 0 25px 15px 25px;
+    text-align: left;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .checkoutBody::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .formGroup { margin-bottom: 12px; }
+
+  .formGroup label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #333;
+  }
+
+  .formGroup input,
+  .formGroup select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 13px;
+    background-color: #fff;
+    font-family: inherit;
+  }
+
+  .formGroup input:focus,
+  .formGroup select:focus {
+    outline: none;
+    border-color: #ffb4c2;
+    box-shadow: 0 0 0 2px rgba(255, 180, 194, 0.3);
+  }
+
+  .formRow {
+    display: flex;
+    gap: 10px;
+  }
+
+  .formRow .formGroup { flex: 1; }
+
+  .error {
+    display: none;
+    color: #d10000;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .formGroup.invalid input,
+  .formGroup.invalid select {
+    border-color: #d10000;
+    background-color: #fff5f5;
+  }
+
+  .formGroup.invalid .error { display: block; }
+
+  .checkoutFoot {
+    flex-shrink: 0;
+    padding: 12px 25px;
+    background-color: #ffffff;
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid #d0c9b8;
+    box-shadow: 0 -4px 8px -4px rgba(0, 0, 0, 0.25);
+  }
+
+  .placeOrderBtn {
+    background-color: #ffb4c2;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid black;
+    width: 100%;
+    font-size: 15px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transform-origin: center;
+  }
+
+  .placeOrderBtn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .placeOrderBtn:active { transform: scale(0.99); }
+
+  .successBody {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 40px;
+    text-align: center;
+  }
+
+  .successIcon {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 14px;
+    display: block;
+    object-fit: contain;
+  }
+
+  .successTitle {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1a7a1a;
+    margin-bottom: 8px;
+  }
+
+  .successText {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 22px;
+    line-height: 1.5;
+  }
+
+  .successBtnRow {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 240px;
+  }
+
+  .viewOrderBtn,
+  .homeBtn {
+    background-color: #ffb4c2;
+    cursor: pointer;
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: 1px solid black;
+    font-size: 15px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transform-origin: center;
+  }
+
+  .viewOrderBtn:hover,
+  .homeBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .viewOrderBtn:active,
+  .homeBtn:active { transform: scale(0.98); }
+
+  .homeBtn { background-color: #fff; }
+
+  .orderInfo {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    text-align: left;
+    overflow: hidden;
+  }
+
+  .orderInfo.show { display: flex; }
+
+  .orderInfoHead {
+    justify-content: space-between;
+  }
+
+  .orderInfoHead .btnBack {
+    background-color: transparent;
+    margin-left: 0;
+  }
+
+  .orderInfoScroll {
+    flex: 1;
+    padding: 0 25px 20px 25px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .orderInfoScroll::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .orderInfoScroll h3 {
+    font-size: 15px;
+    margin: 16px 0 8px 0;
+    border-bottom: 1px solid #d0c9b8;
+    padding-bottom: 6px;
+  }
+
+  .orderInfoScroll h3:first-child {
+    margin-top: 0;
+  }
+
+  .orderInfoScroll .infoRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .orderInfoScroll .infoRow span:first-child { color: #666; }
+
+  .orderInfoScroll .infoRow span:last-child {
+    font-weight: bold;
+    text-align: right;
+    max-width: 60%;
+    word-break: break-word;
+  }
+
+  .orderItemRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .orderItemRow .qtyLabel {
+    color: #888;
+    font-size: 12px;
+  }
+
+  .orderInfoScroll .totalLine {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 15px;
+    border-top: 1px solid #d0c9b8;
+    padding-top: 8px;
+    margin-top: 10px;
+  }
+
+  .tracking { margin-top: 10px; }
+
+  .trackStep {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    position: relative;
+    padding-bottom: 22px;
+  }
+
+  .trackStep:last-child { padding-bottom: 0; }
+
+  .trackStep:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: 24px;
+    bottom: 0;
+    width: 2px;
+    background-color: #d0c9b8;
+  }
+
+  .trackDot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #d0c9b8;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .trackStep.done .trackDot {
+    background-color: #ffb4c2;
+    color: #fff;
+  }
+
+  .trackStep.current .trackDot {
+    background-color: #33aa33;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(51, 170, 51, 0.2);
+  }
+
+  .trackInfo {
+    flex: 1;
+    padding-top: 2px;
+  }
+
+  .trackTitle {
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .trackTime {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  .trackStep.current .trackTitle { color: #1a7a1a; }
+
+  .gcashToast {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  .gcashToast.show {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .gcashToastBox {
+    background-color: #ffffff;
+    border: 1px solid black;
+    border-radius: 18px;
+    padding: 22px 26px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transform: translateY(10px) scale(0.96);
+    transition: transform 0.25s ease;
+  }
+
+  .gcashToast.show .gcashToastBox {
+    transform: translateY(0) scale(1);
+  }
+
+  .gcashToastTitle {
+    font-size: 17px;
+    font-weight: bold;
+    color: #d63384;
+    margin-bottom: 10px;
+  }
+
+  .gcashToastText {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  .gcashToastFooter {
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .gcashDots span { animation: gcashBlink 1.2s infinite; }
+  .gcashDots span:nth-child(2) { animation-delay: 0.2s; }
+  .gcashDots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes gcashBlink {
+    0%, 80%, 100% { opacity: 0; }
+    40% { opacity: 1; }
+  }
+
+  /*
+    The pageBlur sits above the page content (including the Open Cart button)
+    so both get blurred, BUT it does NOT block clicks — pointer-events stays
+    'none' at all times so the button underneath is still clickable.
+  */
+  .pageBlur {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 900;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+  }
+
+  .pageBlur.show {
+    visibility: visible;
+    opacity: 1;
+    /* keep pointer-events: none so clicks pass through to the button */
+    transition: opacity 0.25s ease, visibility 0s;
+  }
+
+  @media (max-width: 640px) {
+    .containerWrap {
+      width: 92vw;
+      height: 80vh;
+    }
+    .box1, .box2, .box3 {
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in lorem ut elit sagittis pulvinar sed sed arcu. Vivamus pharetra elementum nunc vitae pharetra. Sed sodales, mi at mollis placerat, ligula erat placerat nunc, non porta turpis arcu quis est. Quisque commodo nibh a eros mollis, non placerat nibh finibus. Nullam sagittis mauris tellus, ac commodo eros aliquet sed. Proin nec sollicitudin est. Vestibulum congue, magna id varius egestas, mauris massa lobortis risus, non dictum nisi metus ut nulla. Vivamus euismod elit sit amet volutpat consequat.
+
+Donec sed tortor in libero vehicula semper eu quis elit. Sed eros felis, congue id ipsum et, porta commodo felis. Sed sed nibh massa. Vivamus tortor velit, molestie at lectus finibus, consequat eleifend purus. Ut ut dignissim eros. Nunc vel consectetur arcu. Praesent vel diam nec sem facilisis ultrices. Aenean euismod rhoncus quam ut cursus. Suspendisse non ornare orci. Aenean id diam consequat, molestie quam non, fringilla nibh. Duis eget volutpat dui, auctor facilisis diam. Curabitur orci justo, pharetra sit amet diam in, tristique bibendum felis. Mauris congue nulla a dui feugiat hendrerit. Nam interdum id lectus a consequat.
+
+Aliquam vel volutpat purus. Proin non risus accumsan, pellentesque neque quis, interdum nunc. Duis congue erat lorem, sed mollis felis porttitor id. In fermentum commodo dolor, fermentum cursus ipsum pulvinar eu. Phasellus luctus ex et tellus venenatis maximus. Duis diam ligula, iaculis et elementum pretium, pharetra vel nibh. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse potenti. Integer mollis libero diam, luctus fermentum quam dapibus vitae. Nam convallis aliquet erat, sed tempor arcu commodo a. Duis gravida dui ut ipsum varius, ut efficitur erat dictum. Ut in turpis varius, ullamcorper quam eget, laoreet libero. Donec molestie metus vel nulla semper, et facilisis nisl dictum. Sed eu tempor dui, vitae euismod tortor. Aenean non nibh sit amet sapien vulputate volutpat quis eu urna.
+
+Duis convallis lacinia nulla, vel vestibulum diam posuere eget. Mauris gravida nibh nec aliquam imperdiet. Praesent ut diam blandit, lacinia massa pretium, vehicula lacus. Fusce sed purus eu libero porta maximus in sed massa. Ut neque est, ultricies at semper vel, sagittis vitae lectus. Praesent euismod ipsum augue, nec interdum diam viverra laoreet. Aenean rhoncus enim ipsum, sit amet cursus tortor aliquet at. Mauris non ex lorem. Donec condimentum ornare purus, vel molestie tortor dictum a. In ornare lectus sed orci dictum facilisis. Ut dolor tortor, vehicula vel odio sit amet, fringilla eleifend ex.
+
+Donec sodales faucibus ligula non placerat. Morbi bibendum aliquam gravida. Maecenas luctus augue eget semper egestas. Vestibulum lobortis in risus suscipit feugiat. Mauris nisi nulla, mollis et nibh vitae, vulputate tincidunt eros. Ut nec interdum dui, ac sagittis turpis. Curabitur in felis justo. Phasellus pharetra felis sit amet hendrerit facilisis. Nam commodo ac est et luctus.
+
+<div class="pageBlur" id="pageBlur"></div>
+
+<div class="gcashToast" id="gcashToast">
+  <div class="gcashToastBox">
+    <div class="gcashToastTitle">Redirecting to GCash</div>
+    <div class="gcashToastText">
+      You will be redirected to GCash to complete your payment.
+      <br><br>
+      After completing payment, return to this tab to see your order confirmation.
+    </div>
+    <div class="gcashToastFooter">
+      Redirecting<span class="gcashDots"><span>.</span><span>.</span><span>.</span></span>
+    </div>
+  </div>
+</div>
+
+<button class="btn1" id="btn1">Open Cart</button>
+
+<div class="containerWrap">
+
+  <div class="box1" id="box1">
+    <div class="cartHead">
+      <h2>Cart</h2>
+      <button class="btnX" id="btnX">✖</button>
+    </div>
+
+    <div class="cartScroll">
+      <div class="cartItems" id="cartItems">
+
+        <div class="cartItem" data-price="10.00" data-name="Item 1" data-desc="Description">
+          <button class="removeBtn" title="Remove">✖</button>
+          <div class="itemInfo">
+            <span class="itemName">Item 1</span>
+            <span class="itemDesc">Description</span>
+          </div>
+          <div class="qty">
+            <button class="minus" disabled>−</button>
+            <span class="qtyNum">1</span>
+            <button class="plus">+</button>
+          </div>
+          <span class="itemPrice">₱10.00</span>
+        </div>
+
+        <div class="cartItem" data-price="20.00" data-name="Item 2" data-desc="Description">
+          <button class="removeBtn" title="Remove">✖</button>
+          <div class="itemInfo">
+            <span class="itemName">Item 2</span>
+            <span class="itemDesc">Description</span>
+          </div>
+          <div class="qty">
+            <button class="minus" disabled>−</button>
+            <span class="qtyNum">1</span>
+            <button class="plus">+</button>
+          </div>
+          <span class="itemPrice">₱20.00</span>
+        </div>
+
+        <div class="cartItem" data-price="30.00" data-name="Item 3" data-desc="Description">
+          <button class="removeBtn" title="Remove">✖</button>
+          <div class="itemInfo">
+            <span class="itemName">Item 3</span>
+            <span class="itemDesc">Description</span>
+          </div>
+          <div class="qty">
+            <button class="minus" disabled>−</button>
+            <span class="qtyNum">1</span>
+            <button class="plus">+</button>
+          </div>
+          <span class="itemPrice">₱30.00</span>
+        </div>
+
+        <div class="cartItem" data-price="40.00" data-name="Item 4" data-desc="Description">
+          <button class="removeBtn" title="Remove">✖</button>
+          <div class="itemInfo">
+            <span class="itemName">Item 4</span>
+            <span class="itemDesc">Description</span>
+          </div>
+          <div class="qty">
+            <button class="minus" disabled>−</button>
+            <span class="qtyNum">1</span>
+            <button class="plus">+</button>
+          </div>
+          <span class="itemPrice">₱40.00</span>
+        </div>
+
+        <div class="cartItem" data-price="50.00" data-name="Item 5" data-desc="Description">
+          <button class="removeBtn" title="Remove">✖</button>
+          <div class="itemInfo">
+            <span class="itemName">Item 5</span>
+            <span class="itemDesc">Description</span>
+          </div>
+          <div class="qty">
+            <button class="minus" disabled>−</button>
+            <span class="qtyNum">1</span>
+            <button class="plus">+</button>
+          </div>
+          <span class="itemPrice">₱50.00</span>
+        </div>
+
+        <div class="cartItem" data-price="60.00" data-name="Item 6" data-desc="Description">
+          <button class="removeBtn" title="Remove">✖</button>
+          <div class="itemInfo">
+            <span class="itemName">Item 6</span>
+            <span class="itemDesc">Description</span>
+          </div>
+          <div class="qty">
+            <button class="minus" disabled>−</button>
+            <span class="qtyNum">1</span>
+            <button class="plus">+</button>
+          </div>
+          <span class="itemPrice">₱60.00</span>
+        </div>
+
+        <div class="cartItem" data-price="70.00" data-name="Item 7" data-desc="Description">
+          <button class="removeBtn" title="Remove">✖</button>
+          <div class="itemInfo">
+            <span class="itemName">Item 7</span>
+            <span class="itemDesc">Description</span>
+          </div>
+          <div class="qty">
+            <button class="minus" disabled>−</button>
+            <span class="qtyNum">1</span>
+            <button class="plus">+</button>
+          </div>
+          <span class="itemPrice">₱70.00</span>
+        </div>
+
+        <div class="cartItem" data-price="80.00" data-name="Item 8" data-desc="Description">
+          <button class="removeBtn" title="Remove">✖</button>
+          <div class="itemInfo">
+            <span class="itemName">Item 8</span>
+            <span class="itemDesc">Description</span>
+          </div>
+          <div class="qty">
+            <button class="minus" disabled>−</button>
+            <span class="qtyNum">1</span>
+            <button class="plus">+</button>
+          </div>
+          <span class="itemPrice">₱80.00</span>
+        </div>
+
+        <div class="cartItem" data-price="90.00" data-name="Item 9" data-desc="Description">
+          <button class="removeBtn" title="Remove">✖</button>
+          <div class="itemInfo">
+            <span class="itemName">Item 9</span>
+            <span class="itemDesc">Description</span>
+          </div>
+          <div class="qty">
+            <button class="minus" disabled>−</button>
+            <span class="qtyNum">1</span>
+            <button class="plus">+</button>
+          </div>
+          <span class="itemPrice">₱90.00</span>
+        </div>
+
+        <div class="cartItem" data-price="100.00" data-name="Item 10" data-desc="Description">
+          <button class="removeBtn" title="Remove">✖</button>
+          <div class="itemInfo">
+            <span class="itemName">Item 10</span>
+            <span class="itemDesc">Description</span>
+          </div>
+          <div class="qty">
+            <button class="minus" disabled>−</button>
+            <span class="qtyNum">1</span>
+            <button class="plus">+</button>
+          </div>
+          <span class="itemPrice">₱100.00</span>
+        </div>
+
+      </div>
+
+      <div class="emptyCart" id="emptyCart">
+        <div class="emptyIcon">🛒</div>
+        <div class="emptyTitle">Empty Cart</div>
+        <div class="emptyText">Add some items to get started.</div>
+      </div>
+    </div>
+
+    <div class="cartFoot">
+      <div class="totals">
+        <div class="row"><span>Subtotal</span><span id="subtotal">₱0.00</span></div>
+        <div class="row"><span>Delivery Fee</span><span id="delivery">₱0.00</span></div>
+        <div class="row grand"><span>Total</span><span id="grandTotal">₱0.00</span></div>
+      </div>
+      <button class="checkoutBtn" id="checkoutBtn">Checkout</button>
+    </div>
+  </div>
+
+  <div class="box2" id="box2">
+    <div class="checkoutHead">
+      <button class="btnBack" id="backBtn">&lt;</button>
+      <h2>Checkout</h2>
+    </div>
+
+    <div class="checkoutScroll">
+      <div class="checkoutBody" id="checkoutBody">
+
+        <div class="formGroup" id="fg-name">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" placeholder="Juan Dela Cruz">
+          <div class="error">Enter your full name.</div>
+        </div>
+
+        <div class="formRow">
+          <div class="formGroup" id="fg-house">
+            <label for="houseNo">House No.</label>
+            <input type="text" id="houseNo" placeholder="123">
+            <div class="error">Required.</div>
+          </div>
+          <div class="formGroup" id="fg-street">
+            <label for="street">Street</label>
+            <input type="text" id="street" placeholder="Mabini St.">
+            <div class="error">Required.</div>
+          </div>
+        </div>
+
+        <div class="formRow">
+          <div class="formGroup" id="fg-city">
+            <label for="city">City / Municipality</label>
+            <input type="text" id="city" placeholder="Baras, Rizal">
+            <div class="error">Required.</div>
+          </div>
+          <div class="formGroup" id="fg-zip">
+            <label for="zip">Postal Code</label>
+            <input type="text" id="zip" placeholder="1970">
+            <div class="error">Required.</div>
+          </div>
+        </div>
+
+        <div class="formGroup" id="fg-phone">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="+63">
+          <div class="error">Enter a valid phone number (11 digits).</div>
+        </div>
+
+        <div class="formGroup" id="fg-email">
+          <label for="email">Email Address</label>
+          <input type="text" id="email" placeholder="Email Address">
+          <div class="error">Enter a valid email address.</div>
+        </div>
+
+        <div class="formGroup" id="fg-payment">
+          <label for="payment">Payment Method</label>
+          <select id="payment">
+            <option value="" disabled selected hidden>Payment Method</option>
+            <option value="gcash">GCash</option>
+            <option value="cod">Cash on Delivery</option>
+          </select>
+          <div class="error">Select a payment method.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="checkoutFoot">
+      <div class="totals">
+        <div class="row grand"><span>Total</span><span id="checkoutTotal">₱0.00</span></div>
+      </div>
+      <button class="placeOrderBtn" id="placeOrderBtn">Place Order</button>
+    </div>
+  </div>
+
+  <div class="box3" id="box3">
+
+    <div class="successBody" id="successBody">
+      <img class="successIcon" id="successIcon" alt="Success" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23ff8fa5'/><path d='M30 52 L45 67 L72 36' fill='none' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+      <div class="successTitle">Order Placed Successfully!</div>
+      <div class="successText" id="successText">
+        Thank you for your order. We'll process it right away.
+      </div>
+      <div class="successBtnRow">
+        <button class="viewOrderBtn" id="viewOrderBtn">View Order Information</button>
+        <button class="homeBtn" id="homeBtn">Back to Home</button>
+      </div>
+    </div>
+
+    <div class="orderInfo" id="orderInfo">
+      <div class="orderInfoHead">
+        <button class="btnBack" id="orderInfoBackBtn">&lt;</button>
+        <h2>Order Information</h2>
+      </div>
+
+      <div class="orderInfoScroll">
+        <h3>Customer Details</h3>
+        <div class="infoRow"><span>Name</span><span id="oi-name">—</span></div>
+        <div class="infoRow"><span>Address</span><span id="oi-address">—</span></div>
+        <div class="infoRow"><span>Phone</span><span id="oi-phone">—</span></div>
+        <div class="infoRow"><span>Email</span><span id="oi-email">—</span></div>
+        <div class="infoRow"><span>Payment</span><span id="oi-payment">—</span></div>
+
+        <h3>Items</h3>
+        <div id="oi-items"></div>
+
+        <h3>Order Summary</h3>
+        <div class="infoRow"><span>Subtotal</span><span id="oi-subtotal">₱0.00</span></div>
+        <div class="infoRow"><span>Delivery Fee</span><span id="oi-delivery">₱0.00</span></div>
+        <div class="totalLine"><span>Total</span><span id="oi-total">₱0.00</span></div>
+
+        <h3>Order Tracking (EST)</h3>
+        <div class="tracking">
+          <div class="trackStep current" data-step="1">
+            <div class="trackDot">1</div>
+            <div class="trackInfo">
+              <div class="trackTitle">Order Confirmed</div>
+              <div class="trackTime">Just now</div>
+            </div>
+          </div>
+          <div class="trackStep" data-step="2">
+            <div class="trackDot">2</div>
+            <div class="trackInfo">
+              <div class="trackTitle">Preparing your order</div>
+              <div class="trackTime">Est. 15 minutes</div>
+            </div>
+          </div>
+          <div class="trackStep" data-step="3">
+            <div class="trackDot">3</div>
+            <div class="trackInfo">
+              <div class="trackTitle">Out for delivery</div>
+              <div class="trackTime">Est. 30–45 minutes</div>
+            </div>
+          </div>
+          <div class="trackStep" data-step="4">
+            <div class="trackDot">4</div>
+            <div class="trackInfo">
+              <div class="trackTitle">Delivered</div>
+              <div class="trackTime">Est. 45–60 minutes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+  const pageBlur = document.getElementById('pageBlur');
+
+  function showBlur() {
+    pageBlur.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hideBlur() {
+    pageBlur.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  const btn1 = document.getElementById('btn1');
+  const box1 = document.getElementById('box1');
+  const btnX = document.getElementById('btnX');
+  const cartScroll = document.querySelector('.cartScroll');
+  const cartItems = document.getElementById('cartItems');
+  const emptyCart = document.getElementById('emptyCart');
+  const subtotalEl = document.getElementById('subtotal');
+  const deliveryEl = document.getElementById('delivery');
+  const grandTotalEl = document.getElementById('grandTotal');
+
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  const box2 = document.getElementById('box2');
+  const backBtn = document.getElementById('backBtn');
+  const checkoutTotalEl = document.getElementById('checkoutTotal');
+  const placeOrderBtn = document.getElementById('placeOrderBtn');
+
+  const box3 = document.getElementById('box3');
+  const successBody = document.getElementById('successBody');
+  const successText = document.getElementById('successText');
+  const viewOrderBtn = document.getElementById('viewOrderBtn');
+  const homeBtn = document.getElementById('homeBtn');
+  const orderInfo = document.getElementById('orderInfo');
+  const orderInfoBackBtn = document.getElementById('orderInfoBackBtn');
+
+  const checkoutScroll = document.querySelector('.checkoutScroll');
+  const checkoutBody = document.getElementById('checkoutBody');
+
+  const BASE_DELIVERY = 10.00;
+  const DELIVERY_STEP = 3.00;
+  const MIN_QTY = 1;
+
+  const GCASH_RETURN_KEY = 'gcashOrderPending';
+
+  let lastOrderSnapshot = null;
+
+  function closeAllBoxes() {
+    box1.classList.remove('show');
+    box2.classList.remove('show');
+    box3.classList.remove('show');
+  }
+
+  function openCart() {
+    closeAllBoxes();
+    box1.classList.add('show');
+    showBlur();
+    setTimeout(updateFades, 50);
+  }
+
+  function toggleCart() {
+    if (box1.classList.contains('show')) {
+      box1.classList.remove('show');
+      if (!box2.classList.contains('show') && !box3.classList.contains('show')) {
+        hideBlur();
+      }
+    } else {
+      openCart();
+    }
+  }
+
+  /* Primary handler */
+  btn1.addEventListener('click', function (e) {
+    e.preventDefault();
+    toggleCart();
+  });
+
+  /*
+    Safety net: if for ANY reason the button's own click doesn't fire
+    (e.g. some overlay intercepts it), we detect a click within the
+    button's bounding box and treat it as a button click.
+    This guarantees the cart opens after "Back to Home".
+  */
+  document.addEventListener('click', function (e) {
+    // If the click already reached the button, do nothing (handled above)
+    if (e.target === btn1 || btn1.contains(e.target)) return;
+
+    // If a cart box is open, don't hijack clicks
+    if (box1.classList.contains('show') || box2.classList.contains('show') || box3.classList.contains('show')) return;
+
+    const r = btn1.getBoundingClientRect();
+    const x = e.clientX;
+    const y = e.clientY;
+
+    if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) {
+      openCart();
+    }
+  }, true);
+
+  btnX.addEventListener('click', function () {
+    box1.classList.remove('show');
+    hideBlur();
+  });
+
+  checkoutBtn.addEventListener('click', function () {
+    if (document.querySelectorAll('.cartItem').length === 0) return;
+
+    box1.classList.remove('show');
+    box2.classList.add('show');
+    box3.classList.remove('show');
+    setTimeout(updateCheckoutFades, 50);
+  });
+
+  backBtn.addEventListener('click', function () {
+    box2.classList.remove('show');
+    box1.classList.add('show');
+    setTimeout(updateFades, 50);
+  });
+
+  viewOrderBtn.addEventListener('click', function () {
+    successBody.style.display = 'none';
+    orderInfo.classList.add('show');
+  });
+
+  orderInfoBackBtn.addEventListener('click', function () {
+    orderInfo.classList.remove('show');
+    successBody.style.display = 'flex';
+  });
+
+  homeBtn.addEventListener('click', function () {
+    closeAllBoxes();
+    hideBlur();
+    successBody.style.display = 'flex';
+    orderInfo.classList.remove('show');
+    /* Force-restore page interactivity */
+    document.body.style.overflow = '';
+    document.body.style.pointerEvents = '';
+  });
+
+  function formatMoney(n) {
+    return '₱' + n.toFixed(2);
+  }
+
+  function getSubtotalAndQty() {
+    let subtotal = 0;
+    let totalQty = 0;
+
+    document.querySelectorAll('.cartItem').forEach(function (item) {
+      const price = parseFloat(item.dataset.price);
+      const qty = parseInt(item.querySelector('.qtyNum').textContent, 10);
+      subtotal += price * qty;
+      totalQty += qty;
+    });
+
+    return { subtotal, totalQty };
+  }
+
+  function getDelivery(subtotal, totalQty) {
+    if (subtotal <= 0 || totalQty <= 0) return 0;
+    const extraItems = Math.max(0, totalQty - 1);
+    return BASE_DELIVERY + (extraItems * DELIVERY_STEP);
+  }
+
+  function updateEmptyState() {
+    const hasItems = document.querySelectorAll('.cartItem').length > 0;
+    emptyCart.classList.toggle('show', !hasItems);
+    document.querySelector('.cartFoot').style.display = hasItems ? '' : 'none';
+  }
+
+  function updateTotals() {
+    const { subtotal, totalQty } = getSubtotalAndQty();
+    const delivery = getDelivery(subtotal, totalQty);
+    const total = subtotal + delivery;
+
+    subtotalEl.textContent = formatMoney(subtotal);
+    deliveryEl.textContent = formatMoney(delivery);
+    grandTotalEl.textContent = formatMoney(total);
+    checkoutTotalEl.textContent = formatMoney(total);
+
+    updateEmptyState();
+    updateFades();
+  }
+
+  function updateRowPrice(item) {
+    const price = parseFloat(item.dataset.price);
+    const qty = parseInt(item.querySelector('.qtyNum').textContent, 10);
+    item.querySelector('.itemPrice').textContent = formatMoney(price * qty);
+  }
+
+  function updateMinusState(item) {
+    const qty = parseInt(item.querySelector('.qtyNum').textContent, 10);
+    const minusBtn = item.querySelector('.minus');
+    minusBtn.disabled = qty <= MIN_QTY;
+  }
+
+  cartItems.addEventListener('click', function (e) {
+    const item = e.target.closest('.cartItem');
+    if (!item) return;
+
+    if (e.target.classList.contains('plus')) {
+      const qtyEl = item.querySelector('.qtyNum');
+      qtyEl.textContent = parseInt(qtyEl.textContent, 10) + 1;
+      updateRowPrice(item);
+      updateMinusState(item);
+      updateTotals();
+    }
+
+    if (e.target.classList.contains('minus')) {
+      const qtyEl = item.querySelector('.qtyNum');
+      const current = parseInt(qtyEl.textContent, 10);
+
+      if (current <= MIN_QTY) return;
+
+      qtyEl.textContent = current - 1;
+      updateRowPrice(item);
+      updateMinusState(item);
+      updateTotals();
+    }
+
+    if (e.target.classList.contains('removeBtn')) {
+      item.remove();
+      updateTotals();
+    }
+  });
+
+  function updateFades() {
+    const hasItems = document.querySelectorAll('.cartItem').length > 0;
+
+    if (!hasItems) {
+      cartScroll.classList.remove('can-scroll-up', 'can-scroll-down');
+      return;
+    }
+
+    const scrollTop = cartItems.scrollTop;
+    const scrollHeight = cartItems.scrollHeight;
+    const clientHeight = cartItems.clientHeight;
+
+    const canScrollUp = scrollTop > 0;
+    const canScrollDown = scrollTop + clientHeight < scrollHeight - 1;
+
+    cartScroll.classList.toggle('can-scroll-up', canScrollUp);
+    cartScroll.classList.toggle('can-scroll-down', canScrollDown);
+  }
+
+  function updateCheckoutFades() {
+    const scrollTop = checkoutBody.scrollTop;
+    const scrollHeight = checkoutBody.scrollHeight;
+    const clientHeight = checkoutBody.clientHeight;
+
+    const canScrollUp = scrollTop > 0;
+    const canScrollDown = scrollTop + clientHeight < scrollHeight - 1;
+
+    checkoutScroll.classList.toggle('can-scroll-up', canScrollUp);
+    checkoutScroll.classList.toggle('can-scroll-down', canScrollDown);
+  }
+
+  cartItems.addEventListener('scroll', updateFades);
+  checkoutBody.addEventListener('scroll', updateCheckoutFades);
+  window.addEventListener('resize', function () {
+    updateFades();
+    updateCheckoutFades();
+  });
+
+  document.querySelectorAll('.cartItem').forEach(updateMinusState);
+  updateTotals();
+
+  const fields = {
+    name:    { el: document.getElementById('fullName'), group: 'fg-name',    type: 'text'  },
+    house:   { el: document.getElementById('houseNo'),  group: 'fg-house',   type: 'text'  },
+    street:  { el: document.getElementById('street'),   group: 'fg-street',  type: 'text'  },
+    city:    { el: document.getElementById('city'),     group: 'fg-city',    type: 'text'  },
+    zip:     { el: document.getElementById('zip'),      group: 'fg-zip',     type: 'text'  },
+    phone:   { el: document.getElementById('phone'),    group: 'fg-phone',   type: 'phone' },
+    email:   { el: document.getElementById('email'),    group: 'fg-email',   type: 'email' },
+    payment: { el: document.getElementById('payment'),  group: 'fg-payment', type: 'select'}
+  };
+
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  }
+
+  function isValidPhone(v) {
+    const digits = v.replace(/[\s\-()+]/g, '');
+    return /^\d{11}$/.test(digits);
+  }
+
+  function setInvalid(group, invalid) {
+    const g = document.getElementById(group);
+    g.classList.toggle('invalid', invalid);
+  }
+
+  function validateField(key) {
+    const f = fields[key];
+    const value = (f.el.value || '').trim();
+    let ok = true;
+
+    if (!value) {
+      ok = false;
+    } else if (f.type === 'email') {
+      ok = isValidEmail(value);
+    } else if (f.type === 'phone') {
+      ok = isValidPhone(value);
+    }
+
+    setInvalid(f.group, !ok);
+    return ok;
+  }
+
+  Object.keys(fields).forEach(function (key) {
+    const f = fields[key];
+    const evt = f.type === 'select' ? 'change' : 'input';
+    f.el.addEventListener(evt, function () {
+      const group = document.getElementById(f.group);
+      if (group.classList.contains('invalid')) {
+        validateField(key);
+      }
+    });
+  });
+
+  function snapshotOrder() {
+    const items = [];
+    document.querySelectorAll('.cartItem').forEach(function (item) {
+      const itemName = item.dataset.name || item.querySelector('.itemName').textContent;
+      const price = parseFloat(item.dataset.price);
+      const qty = parseInt(item.querySelector('.qtyNum').textContent, 10);
+      items.push({ name: itemName, price: price, qty: qty });
+    });
+
+    const { subtotal, totalQty } = getSubtotalAndQty();
+    const delivery = getDelivery(subtotal, totalQty);
+
+    lastOrderSnapshot = {
+      name: fields.name.el.value.trim(),
+      house: fields.house.el.value.trim(),
+      street: fields.street.el.value.trim(),
+      city: fields.city.el.value.trim(),
+      zip: fields.zip.el.value.trim(),
+      phone: fields.phone.el.value.trim(),
+      email: fields.email.el.value.trim(),
+      payment: fields.payment.el.value,
+      items: items,
+      subtotal: subtotal,
+      delivery: delivery,
+      total: subtotal + delivery
+    };
+
+    return lastOrderSnapshot;
+  }
+
+  function fillOrderInfo() {
+    const o = lastOrderSnapshot || snapshotOrder();
+    const paymentLabel = o.payment === 'gcash' ? 'GCash' : 'Cash on Delivery';
+
+    document.getElementById('oi-name').textContent = o.name;
+    document.getElementById('oi-address').textContent =
+      o.house + ' ' + o.street + ', ' + o.city + ' ' + o.zip;
+    document.getElementById('oi-phone').textContent = o.phone;
+    document.getElementById('oi-email').textContent = o.email;
+    document.getElementById('oi-payment').textContent = paymentLabel;
+
+    const itemsContainer = document.getElementById('oi-items');
+    itemsContainer.innerHTML = '';
+    o.items.forEach(function (it) {
+      const row = document.createElement('div');
+      row.className = 'orderItemRow';
+      row.innerHTML =
+        '<span>' + it.name + ' <span class="qtyLabel">× ' + it.qty + '</span></span>' +
+        '<span>' + formatMoney(it.price * it.qty) + '</span>';
+      itemsContainer.appendChild(row);
+    });
+
+    document.getElementById('oi-subtotal').textContent = formatMoney(o.subtotal);
+    document.getElementById('oi-delivery').textContent = formatMoney(o.delivery);
+    document.getElementById('oi-total').textContent = formatMoney(o.total);
+  }
+
+  function clearCart() {
+    cartItems.innerHTML = '';
+    updateTotals();
+  }
+
+  function showSuccess(message) {
+    successBody.style.display = 'flex';
+    orderInfo.classList.remove('show');
+
+    successText.textContent = message;
+
+    fillOrderInfo();
+
+    box1.classList.remove('show');
+    box2.classList.remove('show');
+    box3.classList.add('show');
+
+    clearCart();
+
+    showBlur();
+  }
+
+  placeOrderBtn.addEventListener('click', function () {
+    let allValid = true;
+
+    Object.keys(fields).forEach(function (key) {
+      const ok = validateField(key);
+      if (!ok) allValid = false;
+    });
+
+    if (!allValid) {
+      const firstInvalid = document.querySelector('.formGroup.invalid');
+      if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    snapshotOrder();
+
+    const method = fields.payment.el.value;
+
+    if (method === 'gcash') {
+      sessionStorage.setItem(GCASH_RETURN_KEY, 'true');
+      sessionStorage.setItem('lastOrderSnapshot', JSON.stringify(lastOrderSnapshot));
+
+      showGcashToast();
+
+      setTimeout(function () {
+        hideGcashToast();
+        window.open('https://www.gcash.com/', '_blank');
+        onGcashReturn();
+      }, 5000);
+    } else if (method === 'cod') {
+      showSuccess(
+        'Your Cash on Delivery order has been placed. Please prepare the exact amount upon delivery.'
+      );
+    }
+  });
+
+  function onGcashReturn() {
+    if (sessionStorage.getItem(GCASH_RETURN_KEY) === 'true') {
+      sessionStorage.removeItem(GCASH_RETURN_KEY);
+
+      const saved = sessionStorage.getItem('lastOrderSnapshot');
+      if (saved) {
+        try { lastOrderSnapshot = JSON.parse(saved); } catch (e) {}
+        sessionStorage.removeItem('lastOrderSnapshot');
+      }
+
+      showSuccess('Payment via GCash was successful! Track your order below.');
+    }
+  }
+
+  window.addEventListener('load', function () {
+    setTimeout(onGcashReturn, 100);
+  });
+
+  function showGcashToast() {
+    document.getElementById('gcashToast').classList.add('show');
+    showBlur();
+  }
+
+  function hideGcashToast() {
+    document.getElementById('gcashToast').classList.remove('show');
+  }
+
+</script>
+
+</body>
+</html>
