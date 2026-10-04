@@ -1,1 +1,93 @@
 
+.Heading {
+    padding: 0%;
+    margin: 0%;
+    background-color: white;
+}
+
+.Heading img {
+    width: 200px;
+    height: 100px;
+    padding: 0%;
+    margin: 0%;
+    background-color: white;
+    margin-right: 40%;
+    vertical-align: middle;
+
+}
+
+.Heading p {
+    display: inline;
+    height: 50%;
+    padding: 25px;
+    color: #b83251;
+    font-family: sans-serif;
+}
+
+.About {
+    display: flex;
+    align-items: center;
+
+}
+
+.About img {
+    position: absolute;
+    width: 170px;
+    height: 270px;
+    border: 5px solid;
+    border-color: #b83251;
+    border-radius: 10px;
+}
+
+.About img:nth-child(1) {
+    margin-left: 170px;
+    margin-top: 10px;
+    transform: rotate(10deg);
+    z-index: 1;
+}
+
+.About img:nth-child(2) {
+    margin-left: 70px;
+    margin-top: 170px;
+    transform: rotate(-10deg);
+    z-index: 2;
+}
+
+.About img:nth-child(3) {
+    margin-left: 170px;
+    margin-top: 470px;
+    transform: rotate(15deg);
+    z-index: 3;
+}
+
+
+body {
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)),
+        url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_wKEaxmODSqJ6uT15kbnTmzXw83RxglmiealaGlCRJkuLVxuP-IzjtbHS7FsQBmi6BlefRPEjY2zX4aFJiTdm_VP-plzyuiC02n_sy8Mlw&s=10");
+    background-size: cover;
+    background-position: center;
+}
+
+h1 {
+    color: #b83251;
+    font-family: sans-serif;
+    font-size: 70px;
+    margin-left: 450px;
+    margin-bottom: -250px;
+}
+
+.About p {
+    margin-top: 280px;
+    margin-left: 450px;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    margin-right: 200px;
+}
+
+.Footer img{
+    margin-top: 100px;
+     padding: 0%;
+    width: 1500px;
+    height: 180px;
+}
