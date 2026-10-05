@@ -1,0 +1,15 @@
+<footer>  
+  <div class="footer-content">
+    <ul class="foot-ish">
+<li><div class="block" id = "id"> &copy; 2024 Cecilia's Homemade Foodies. All rights reserved.</div></li>
+
+<li></li><div class="block" id = "id">block 2</div></li>
+
+<li></li><div class="block" id = "id"></div></li>
+
+</ul>
+ </div>
+<ul>
+  <li style="text-align: center; color: white;">&copy; 2024 Cecilia's Homemade Foodies. All rights reserved.</li>
+</ul>
+</footer>
