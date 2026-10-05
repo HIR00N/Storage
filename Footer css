@@ -1,0 +1,29 @@
+footer {
+  min-height: 15vh;
+ background-color: var(--p);
+  padding: 20px;
+
+}
+.foot-ish{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 60px;
+  background-color: var(--1212);
+  list-style: none;
+}
+.footer-content{
+ display: flex; 
+  flex-direction: row;
+  justify-content: space-evenly; 
+  gap: 5px;
+  text-align: center;
+}
+.block {
+ font-size: 14px;
+  display: inline;
+  padding: 20px;
+  margin: 10px;
+  width: 200px;
+  color: var(--white);
+}
