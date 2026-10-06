@@ -1,15 +1,89 @@
-<footer>  
-  <div class="footer-content">
-    <ul class="foot-ish">
-<li><div class="block" id = "id"> &copy; 2024 Cecilia's Homemade Foodies. All rights reserved.</div></li>
+<link rel="stylesheet" href="footer.css">
+<!DOCTYPE html>
+<html lang="en">
 
-<li></li><div class="block" id = "id">block 2</div></li>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cecilia's Homemade Foodies</title>
 
-<li></li><div class="block" id = "id"></div></li>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-</ul>
- </div>
-<ul>
-  <li style="text-align: center; color: white;">&copy; 2024 Cecilia's Homemade Foodies. All rights reserved.</li>
-</ul>
-</footer>
+<body>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+
+    <div class="footer-container">
+
+      <!-- LOGO -->
+      <div class="footer-logo">
+        <img src="images/footer.png" alt="Cecilia's Homemade Foodies Logo">
+      </div>
+
+
+      <!-- QUICK LINKS -->
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+
+        <a href="#">Home</a>
+        <a href="#">Menu</a>
+        <a href="#">Request</a>
+        <a href="#">About Us</a>
+      </div>
+
+
+      <!-- FOLLOW US -->
+      <div class="footer-column">
+        <h3>Follow Us</h3>
+
+        <div class="social-icons">
+
+          <a href="#" class="social-link">
+            <img src="images/facebook.png" alt="Facebook">
+          </a>
+
+          <a href="#" class="social-link">
+            <img src="images/instagram.png" alt="Instagram">
+          </a>
+
+        </div>
+      </div>
+
+      <!-- CONTACT US -->
+      <div class="footer-column contact-column">
+
+        <h3>Contact Us</h3>
+
+        <p>
+          <span class="icon">✉</span>
+          ceciliafoodies@gmail.com
+        </p>
+
+        <p>
+          <span class="icon">●</span>
+          Taytay, Rizal, Philippines
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- COPYRIGHT -->
+    <div class="footer-bottom">
+
+      <p>
+        © 2025 Cecilia's Homemade Foodies.
+        All rights reserved.
+        <span class="heart">♡</span>
+      </p>
+
+    </div>
+
+  </footer>
+
+</body>
+
+</html>
