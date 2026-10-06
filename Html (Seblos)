@@ -5,19 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us Page</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style1.css">
 </head>
 
 <body>
 
-    <div class="Heading">
-        <img src="2ac4b5c85a1671095b82569cd94871526b25d008.png">
-        <p>HOME</p>
-        <p>MENU</p>
-        <p>REQUEST</p>
-        <p><u>ABOUT US</u></p>
+    <header class="site-header">
+        <img src="New_logo.png" alt="Cecilia's Homemade Foodies" class="logo">
 
-    </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a>HOME</a></li>
+                <li><a>MENU</a></li>
+                <li><a>REQUEST</a></li>
+                <li><a herf="about.html">ABOUT US</a></li>
+                <li><a><img src="Test.svg" alt="Company logo" width="28px" height="25px"></a></li>
+            </ul>
+        </nav>
+    </header>
     <h1><b>About Us</b></h1>
     <div class="About">
 
@@ -36,8 +41,57 @@
         </p>
     </div>
 
+    <div class="container">
+        <div class="m">
+
+            <img
+                src="https://scontent.fmnl43-1.fna.fbcdn.net/v/t39.30808-6/638978816_1504208158375900_3211940806343303759_n.jpg?stp=cp6_dst-jpg_tt6&cstp=mx1536x2048&ctp=s1536x2048&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=_pUpanFA3SUQ7kNvwGb-EmK&_nc_oc=AdrMV6if5yYegGiLFsUZM9SWApiv2ffwZ6mfUsDbpo0v4rbhQdo2NTmUwFtXhHEqJfI&_nc_zt=23&_nc_ht=scontent.fmnl43-1.fna&_nc_gid=WgTZL2IG2YG_7GrX83E_rA&_nc_ss=7b289&oh=00_AQO4xBSxMkwOlaCMtCv7EcY1uvcCWA1jQDpa52OPOtHM1A&oe=6ACA9A31">
+            <div class="Content">
+                <div class="header">OUR MISSION</div>
+                <div class="para">Cecilia Homemade Foodies aims to provide delicious, affordable, and freshly prepared
+                    homemade food for lunch,
+                    snacks, and celebrations. We want to give customers convenient online ordering while serving food
+                    that feels
+                    homemade, satisfying, and made with care.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="v">
+
+            <img
+                src="https://scontent.fmnl11-1.fna.fbcdn.net/v/t39.30808-6/558679170_1382424850554232_5619186941406070283_n.jpg?stp=cp6_dst-jpg_tt6&cstp=mx1536x2048&ctp=s1536x2048&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=fpehtO0kvJsQ7kNvwEc-luh&_nc_oc=Ado_nAkG8s-MIUBqlb8u-ooOxFS23fZSuqK2ywaz5DJAFIWY_AeMw8H3kfBGrWHKkeY&_nc_zt=23&_nc_ht=scontent.fmnl11-1.fna&_nc_gid=3zt7O2qtpq3ZjY7oMxE8Iw&_nc_ss=7b289&oh=00_AQM3rTAjfnOLXsBvQ9Ts9jLC8Zu0rfmOKvNlVYNtjhj45g&oe=6ACAA2D1">
+            <div class="Content">
+                <div class="header">OUR VISION</div>
+                <div class="para">To become a trusted homemade food business known for delicious food, quality service,
+                    and being part of every customer’s everyday meal and special celebrations.
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <div class="g">
+
+        <img
+            src="https://scontent.fmnl43-1.fna.fbcdn.net/v/t39.30808-6/615084547_1466087148854668_1938750406761612041_n.jpg?stp=cp6_dst-jpg_tt6&cstp=mx1536x2048&ctp=s1536x2048&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=HJqkc6OUDhwQ7kNvwG6Ycrg&_nc_oc=Adq8m0CSAUqf2DTC2A0kY8aQTttssxEPmHi84_HBDbgD43WOdGswrT51YVn34W2InvQ&_nc_zt=23&_nc_ht=scontent.fmnl43-1.fna&_nc_gid=pRHEGpTzdvEsa3XFoGeRBw&_nc_ss=7b289&oh=00_AQOYaMc-tqaQucif7xuIF61xwFgBqM6GVU6fo6TjFV_w6w&oe=6ACA9E88">
+        <div class="Content">
+            <p>.</p>
+            <div class="headers">OUR GOAL</div>
+            <div class="paras">To grow Cecilia Homemade Foodies through online selling, provide consistent and quality
+                food, satisfy our customers, and expand our menu and services as the business grows.
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
     <div class="Footer"><img src="FOOTER.jpg"></div>
+
 </body>
 
 </html>
 <!--NOT DONE YET-->
+<!--IM GONNA POLISH IT-->
