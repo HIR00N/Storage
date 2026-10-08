@@ -14,10 +14,10 @@
 
   <nav>
     <ul class="nav-links">
-      <li><a >HOME</a></li>
-      <li><a>MENU</a></li>
-      <li><a  >REQUEST</a></li>
-      <li><a >ABOUT US</a></li>
+      <li><a href="#" class="Selected">HOME</a></li>
+      <li><a href="#">MENU</a></li>
+      <li><a href="#">REQUEST</a></li>
+      <li><a href="#">ABOUT US</a></li>
        <li><a><img src="Test.svg" alt="Company logo" width="28px" height="25px"></a></li>
     </ul>
   </nav>  
@@ -26,6 +26,18 @@
 
 
 <main>
+<div> 
+<section class="banner">
+
+  </div>
+</section>
+</div>
+
+
+
+
+
+
  <div class="container">
 
     <!-- FOOD OF THE DAY -->
@@ -132,21 +144,59 @@
 
 
 
-<footer>  
-  <div class="footer-content">
-    <ul class="foot-ish">
-<li><div class="block" id = "id"> &copy; 2024 Cecilia's Homemade Foodies. All rights reserved.</div></li>
+ <!-- FOOTER -->
+  <footer class="footer">
 
-<li></li><div class="block" id = "id">block 2</div></li>
+    <div class="footer-container">
 
-<li></li><div class="block" id = "id"></div></li>
+      <!-- LOGO -->
+      <div class="footer-logo">
+        <img src="New_logo.png" alt="Cecilia's Homemade Foodies Logo">
+      </div>
 
-</ul>
- </div>
-<ul>
-  <li style="text-align: center; color: white;">&copy; 2024 Cecilia's Homemade Foodies. All rights reserved.</li>
-</ul>
-</footer>
+
+      <!-- QUICK LINKS -->
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <a href="#">Home</a>
+        <a href="#">Menu</a>
+        <a href="#">Request</a>
+        <a href="#">About Us</a>
+      </div>
+      <!-- FOLLOW US -->
+      <div class="footer-column">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#" class="social-link">
+            <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/960px-2023_Facebook_icon.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" alt="Facebook">
+          </a>
+          <a href="#" class="social-link">
+            <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/960px-Instagram_logo_2022.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" alt="Instagram">
+          </a>
+        </div>
+      </div>
+      <!-- CONTACT US -->
+      <div class="footer-column contact-column">
+        <h3>Contact Us</h3>
+        <p>
+          <span class="icon">✉</span>
+          ceciliafoodies@gmail.com
+        </p>
+        <p>
+          <span class="icon">●</span>
+          Taytay, Rizal, Philippines
+        </p>
+      </div>
+    </div>
+    <!-- COPYRIGHT -->
+    <div class="footer-bottom">
+      <p>
+        © 2025 Cecilia's Homemade Foodies.
+        All rights reserved.
+        <span class="heart">♡</span>
+      </p>
+    </div>
+  </footer>
 
 </body>
 </html>
