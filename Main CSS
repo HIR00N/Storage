@@ -8,6 +8,7 @@
   --1212: #fef0f5; 
   --checker: black; 
   --p: #FFB2C4;
+  --hp:#E86A91;
 }
 body {
    background-color: #fff5f5;
@@ -45,7 +46,7 @@ h1, h2, h3 {
 }
 .nav-links a {
   align-items: center;
-display: inline-flex;  
+  display: inline-flex;  
   padding: 0 20px; 
    height: 52px; 
    box-sizing: border-box; 
@@ -56,12 +57,23 @@ display: inline-flex;
   text-decoration: none;
   border-radius: 15px;
   border-bottom: 4px solid var(--text-dark);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  /* transition: border-color 0.15s, box-shadow 0.15s; */
+}
+a.Selected{
+    background-color: #993055;
+  border-bottom-color: color-mix(in srgb, var(--text-dark) 80%, transparent);
+  border-bottom: 0px solid var(--text-dark);
+  box-shadow: 0 10px 10px rgba(20, 3, 5, 0.26); /* 4th: shadow intensity */
+
 }
 .nav-links a:hover {
-  background-color: #a92755;
-  border-bottom-color: color-mix(in srgb, var(--text-dark) 50%, transparent);
+  background-color: #db3469; 
  
+  border-bottom-color: color-mix(in srgb, var(--text-dark) 50%, transparent);
+  font-size: 18px;
+   border-radius: 20px;
+   font-weight: bold;
+     padding:10px 20px 10px; 
    box-shadow: none;               /* CHANGED: removes the grey ring on hover */
      
 }
@@ -97,36 +109,209 @@ main {
   flex: 1;
 }
 
-footer {
-  min-height: 15vh;
- background-color: var(--p);
-  padding: 20px;
-
-}
-.foot-ish{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 60px;
-  background-color: var(--1212);
-  list-style: none;
-}
-.footer-content{
- display: flex; 
-  flex-direction: row;
-  justify-content: space-evenly; 
-  gap: 5px;
-  text-align: center;
-}
-.block {
- font-size: 14px;
-  display: inline;
-  padding: 20px;
-  margin: 10px;
-  width: 200px;
-  color: var(--white);
+.footer {
+    width: 100%;
+    background: #E86A91;
+    color: #ffffff;
+    padding: 28px 5% 12px;
 }
 
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 1.4fr 1.2fr 1.2fr 1.5fr;
+
+    align-items: start;
+}
+
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+
+    padding-right: 30px;
+}
+
+.footer-logo img {
+    width: 190px;
+    height: auto;
+    display: block;
+
+    /* Makes the pink logo appear white */
+    filter: brightness(0) invert(1);
+}
+
+
+
+.footer-column {
+    min-height: 80px;
+
+    border-left: 1px solid rgba(255, 255, 255, 0.45);
+
+    padding-left: 35px;
+}
+
+
+
+.footer-column h3 {
+    font-size: 15px;
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+
+
+.footer-column a {
+    display: block;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    font-size: 13px;
+
+    line-height: 19px;
+
+    transition: 0.2s;
+}
+
+.footer-column a:hover {
+    opacity: 0.7;
+}
+
+
+
+.social-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.social-link img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    display: block;
+}
+
+.social-link:hover {
+    opacity: 0.8;
+}
+
+
+.contact-column p {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 9px;
+
+    font-size: 12px;
+}
+
+.icon {
+    width: 18px;
+
+    font-size: 15px;
+
+    text-align: center;
+}
+
+
+.footer-bottom {
+    max-width: 1200px;
+
+    margin: 15px auto 0;
+
+    padding-top: 12px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.45);
+
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 11px;
+
+    
+}
+
+.heart {
+    font-size: 16px;
+
+    margin-left: 5px;
+}
+
+
+@media screen and (max-width: 850px) {
+
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+
+        row-gap: 30px;
+    }
+
+    .footer-logo {
+        padding-right: 0;
+    }
+
+    .footer-column {
+        padding-left: 25px;
+    }
+
+}
+
+
+@media screen and (max-width: 550px) {
+    .footer {
+        padding: 30px 25px 15px;
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+    }
+    .footer-logo {
+        justify-content: center;
+
+        padding-bottom: 5px;
+    }
+    .footer-logo img {
+        width: 200px;
+    }
+    .footer-column {
+        border-left: none;
+
+        border-top: 1px solid rgba(255, 255, 255, 0.35);
+
+        padding-left: 0;
+
+        padding-top: 18px;
+    }
+    .footer-column h3 {
+        font-size: 16px;
+    }
+    .footer-bottom {
+        margin-top: 20px;
+    }
+}
+
+.banner{ 
+  
+  background-image: url("BANNER.jpg");
+  background-repeat: no-repeat;
+   /*background-size: cover;  fills the section without stretching */
+     margin: 0 auto;
+  width: 1200px;    
+  padding : 0px 10px;
+  background-position: center;
+  height: 400px;   
+}
 
 
 
