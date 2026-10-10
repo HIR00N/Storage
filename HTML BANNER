@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="banner.css">
+<section class="hero-banner">
+    <div class="hero-content">
+        <p class="brand-label">Cecilia's Homemade Foodies</p>
+
+        <h1>
+            Homemade Goodness,<br>
+            Made With Love <span class="heart">♡</span>
+        </h1>
+
+        <p class="hero-description">
+            Enjoy delicious homemade meals, snacks<br class="desktop-break">
+            and packages, perfect for your everyday cravings<br class="desktop-break">
+            and special moments.
+        </p>
+
+        <a href="menu.html" class="order-btn">
+            <span class="utensils">♜</span>
+            Order Now
+            <span class="arrow">→</span>
+        </a>
+    </div>
+
+    <div class="hero-image">
+        <img src="images/BANNER.png"
+             alt="Delicious homemade meal with rice, grilled chicken, egg and vegetables">
+    </div>
+</section>
