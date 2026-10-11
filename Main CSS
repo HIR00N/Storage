@@ -47,12 +47,12 @@ h1, h2, h3 {
 .nav-links a {
   align-items: center;
   display: inline-flex;  
-  padding: 0 20px; 
+  padding: 10px 20px 0; 
    height: 52px; 
    box-sizing: border-box; 
   background-color:   #bd2e5c;    /* CHANGED: was #a7a7a7 (grey), now the active color */
   color: #ffffff;                 /* red-pink text, replaces var(--white) */
-  font-family: Georgia, serif;
+  font-family: Timmana ;
   font-size: 16px;
   text-decoration: none;
   border-radius: 15px;
@@ -64,6 +64,7 @@ a.Selected{
   border-bottom-color: color-mix(in srgb, var(--text-dark) 80%, transparent);
   border-bottom: 0px solid var(--text-dark);
   box-shadow: 0 10px 10px rgba(20, 3, 5, 0.26); /* 4th: shadow intensity */
+  color: #000000;
 
 }
 .nav-links a:hover {
@@ -85,7 +86,10 @@ a.Selected{
   gap: 20px;  /* space between each link */
    height: 30px;
   list-style: none;
-  font-family: calibri;
+
+  font-family: "Timmana", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 
 }
 .logo {
@@ -127,13 +131,6 @@ main {
     align-items: start;
 }
 
-
-.footer-logo {
-    display: flex;
-    align-items: center;
-
-    padding-right: 30px;
-}
 
 .footer-logo img {
     width: 190px;
@@ -326,7 +323,7 @@ main {
 /* FOOD OF THE DAY */
 
 .section-title {
-    font-family: Georgia, serif;
+    font-family: Timmana;
     font-size: 32px;
     font-weight: bold;
     text-align: left;
