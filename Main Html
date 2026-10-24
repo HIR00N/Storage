@@ -3,16 +3,16 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	 <link rel="stylesheet" href="test1.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Timmana&family=Jaini&display=swap" rel="stylesheet">
-<title >Hello World</title> 
+	<link rel="stylesheet" href="test1.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Timmana&family=Jaini&display=swap" rel="stylesheet">
+	<title>Cecilia's Homemade Foodies</title>
 </head>
 
 <body>
 <header class="site-header">
-<img src="New_logo.png" alt="Cecilia's Homemade Foodies" class="logo">
+  <img src="New_logo.png" alt="Cecilia's Homemade Foodies" class="logo">
 
   <nav>
     <ul class="nav-links">
@@ -20,92 +20,89 @@
       <li><a href="#">MENU</a></li>
       <li><a href="#">REQUEST</a></li>
       <li><a href="#">ABOUT US</a></li>
-       <li><a><img src="Test.svg" alt="Company logo" width="28px" height="25px"></a></li>
+      <li><a><img src="Test.svg" alt="Company logo" width="28px" height="25px"></a></li>
     </ul>
-  </nav>  
+  </nav>
 </header>
 
 
-
 <main>
-<div> 
-<section class="banner">
+  <section class="banner"></section>
 
-  </div>
-</section>
-</div>
-
- <div class="container">
+  <div class="container">
 
     <!-- FOOD OF THE DAY -->
     <div class="section-title">
       Food's of the day
     </div>
+
     <div class="carousel">
-   <a href="#today-first" class="arrow arrow-left" aria-label="Scroll left">&#10094;</a>
+      <a href="#today-first" class="arrow arrow-left" aria-label="Scroll left">&#10094;</a>
 
-  <div class="food-row">
+      <div class="food-row">
 
-    <div class="food-card" id="today-first">
-      <img src="Nilaga.jpg" alt="Nilaga">
-      <div class="food-info">
-        <div class="food-name">Nilaga</div>
-        <div class="price">P65</div>
+        <div class="food-card" id="today-first">
+          <img src="Nilaga.jpg" alt="Nilaga">
+          <div class="food-info">
+            <div class="food-name">Nilaga</div>
+            <div class="price">P65</div>
+          </div>
+          <div class="cart-btn">ADD TO CART</div>
+        </div>
+
+        <div class="food-card">
+          <img src="CHICKEN AFRITADA.jpg" alt="Chicken Afritada">
+          <div class="food-info">
+            <div class="food-name">Chicken Afritada</div>
+            <div class="price">P65</div>
+          </div>
+          <div class="cart-btn">ADD TO CART</div>
+        </div>
+
+        <div class="food-card">
+          <img src="BICOL EXPRESS.jpg" alt="Bicol Express">
+          <div class="food-info">
+            <div class="food-name">Bicol Express</div>
+            <div class="price">P65</div>
+          </div>
+          <div class="cart-btn">ADD TO CART</div>
+        </div>
+
+        <div class="food-card">
+          <img src="Chicken Fingers.jpg" alt="Chicken Fingers">
+          <div class="food-info">
+            <div class="food-name">Chicken Fingers</div>
+            <div class="price">P65</div>
+          </div>
+          <div class="cart-btn">ADD TO CART</div>
+        </div>
+
+        <div class="food-card">
+          <img src="BEEF KARE KARE.jpg" alt="Kare kare">
+          <div class="food-info">
+            <div class="food-name">Kare kare</div>
+            <div class="price">P65</div>
+          </div>
+          <div class="cart-btn">ADD TO CART</div>
+        </div>
+
+        <!-- SELECT MORE (opens the pop-up) -->
+        <button type="button" class="food-card more-card" id="today-last" popovertarget="more-popup">
+          <span class="more-icon">&#10095;</span>
+          <span class="more-text">Select more</span>
+        </button>
+
       </div>
-      <div class="cart-btn">ADD TO CART</div>
+
+      <a href="#today-last" class="arrow arrow-right" aria-label="Scroll right">&#10095;</a>
     </div>
 
-    <div class="food-card">
-      <img src="CHICKEN AFRITADA.jpg" alt="Chicken Afritada">
-      <div class="food-info">
-        <div class="food-name">Chicken Afritada</div>
-        <div class="price">P65</div>
-      </div>
-      <div class="cart-btn">ADD TO CART</div>
-    </div>
-
-    <div class="food-card">
-      <img src="BICOL EXPRESS.jpg" alt="Bicol Express">
-      <div class="food-info">
-        <div class="food-name">Bicol Express</div>
-        <div class="price">P65</div>
-      </div>
-      <div class="cart-btn">ADD TO CART</div>
-    </div>
-
-    <!-- NEW: 4th card, this is the one that shows as the faded peek -->
-    <div class="food-card">
-      <img src="Chicken Fingers.jpg" alt="Chicken Fingers">
-      <div class="food-info">
-        <div class="food-name">Chicken Fingers</div>
-        <div class="price">P65</div>
-      </div>
-      <div class="cart-btn">ADD TO CART</div>
-    </div>
-
-    <!-- NEW: 5th card, revealed when you scroll -->
-    <div class="food-card"  id="today-last-old">
-      <img src="BEEF KARE KARE.jpg" alt="Kare kare">
-      <div class="food-info">
-        <div class="food-name">Kare kare</div>
-        <div class="price">P65</div>
-      </div>
-      <div class="cart-btn">ADD TO CART</div>
-    </div>
-<a href="#menu" class="food-card more-card" id="today-last">
-  <span class="more-icon">&#10095;</span>
-  <span class="more-text">Select more</span>
-</a>
-  </div>
-
-  <a href="#today-last" class="arrow arrow-right" aria-label="Scroll right">&#10095;</a>
-</div>
 
     <!-- MENU -->
-    <div class="menu-header">
+    <div class="menu-header" id="menu">
 
       <div class="menu-title">
-      Menu
+        Menu
       </div>
 
       <div class="menu-tabs">
@@ -119,106 +116,134 @@
 
 
     <!-- MENU FOOD CARDS -->
-    <!-- MENU FOOD CARDS -->
-<div class="carousel">
-  <a href="#menu-first" class="arrow arrow-left" aria-label="Scroll left">&#10094;</a>
+    <div class="carousel">
+      <a href="#menu-first" class="arrow arrow-left" aria-label="Scroll left">&#10094;</a>
 
-  <div class="food-row" tabindex="0">
+      <div class="food-row" tabindex="0">
 
-    <div class="food-card" id="menu-first">
-      <img src="Chicken Fingers.jpg" alt="Chicken Fingers">
-      <div class="food-info">
-        <div class="food-name">Chicken Fingers</div>
-        <div class="price">P65</div>
+        <div class="food-card" id="menu-first">
+          <img src="Chicken Fingers.jpg" alt="Chicken Fingers">
+          <div class="food-info">
+            <div class="food-name">Chicken Fingers</div>
+            <div class="price">P65</div>
+          </div>
+          <div class="cart-btn">ADD TO CART</div>
+        </div>
+
+        <div class="food-card">
+          <img src="BEEF KARE KARE.jpg" alt="Kare kare">
+          <div class="food-info">
+            <div class="food-name">Kare kare</div>
+            <div class="price">P65</div>
+          </div>
+          <div class="cart-btn">ADD TO CART</div>
+        </div>
+
+        <div class="food-card">
+          <img src="CHICKEN MUSHROOM.jpg" alt="Chicken Mushroom">
+          <div class="food-info">
+            <div class="food-name">Chicken Mushroom</div>
+            <div class="price">P65</div>
+          </div>
+          <div class="cart-btn">ADD TO CART</div>
+        </div>
+
+        <div class="food-card">
+          <img src="CHICKEN MUSHROOM.jpg" alt="Chicken Mushroom">
+          <div class="food-info">
+            <div class="food-name">Chicken Mushroom</div>
+            <div class="price">P65</div>
+          </div>
+          <div class="cart-btn">ADD TO CART</div>
+        </div>
+
+        <div class="food-card">
+          <img src="CHICKEN MUSHROOM.jpg" alt="Chicken Mushroom">
+          <div class="food-info">
+            <div class="food-name">Chicken Mushroom</div>
+            <div class="price">P65</div>
+          </div>
+          <div class="cart-btn">ADD TO CART</div>
+        </div>
+
+        <!-- SELECT MORE (opens the pop-up) -->
+        <button type="button" class="food-card more-card" id="menu-last" popovertarget="more-popup">
+          <span class="more-icon">&#10095;</span>
+          <span class="more-text">Select more</span>
+        </button>
+
       </div>
-      <div class="cart-btn">ADD TO CART</div>
+
+      <a href="#menu-last" class="arrow arrow-right" aria-label="Scroll right">&#10095;</a>
     </div>
 
-    <div class="food-card">
-      <img src="BEEF KARE KARE.jpg" alt="Kare kare">
-      <div class="food-info">
-        <div class="food-name">Kare kare</div>
-        <div class="price">P65</div>
-      </div>
-      <div class="cart-btn">ADD TO CART</div>
-    </div>
-
-    <div class="food-card">
-      <img src="CHICKEN MUSHROOM.jpg" alt="Chicken Mushroom">
-      <div class="food-info">
-        <div class="food-name">Chicken Mushroom</div>
-        <div class="price">P65</div>
-      </div>
-      <div class="cart-btn">ADD TO CART</div>
-    </div>
-
-    <a href="#" class="food-card more-card" id="menu-last">
-      <span class="more-icon">&#10095;</span>
-      <span class="more-text">Select more</span>
-    </a>
-
-  </div>
-
-  <a href="#menu-last" class="arrow arrow-right" aria-label="Scroll right">&#10095;</a>
-</div>
-
+  </div><!-- /.container -->
 </main>
 
 
-
- <!-- FOOTER -->
-  <footer class="footer">
-
-    <div class="footer-container">
-
-      <!-- LOGO -->
-      <div class="footer-logo">
-        <img src="New_logo.png" alt="Cecilia's Homemade Foodies Logo">
-      </div>
+<!-- POP-UP (opened by the "Select more" buttons) -->
+<div id="more-popup" popover class="more-popup">
+  <button type="button" class="popup-close" popovertarget="more-popup" popovertargetaction="hide" aria-label="Close">&times;</button>
+  <h2>More from our kitchen</h2>
+  <p>Put whatever you want here: extra dishes, a link to the full menu, a request form...</p>
+</div>
 
 
-      <!-- QUICK LINKS -->
-      <div class="footer-column">
-        <h3>Quick Links</h3>
-        <a href="#">Home</a>
-        <a href="#">Menu</a>
-        <a href="#">Request</a>
-        <a href="#">About Us</a>
-      </div>
-      <!-- FOLLOW US -->
-      <div class="footer-column">
-        <h3>Follow Us</h3>
-        <div class="social-icons">
-          <a href="#" class="social-link">
-            <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/960px-2023_Facebook_icon.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" alt="Facebook">
-          </a>
-          <a href="#" class="social-link">
-            <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/960px-Instagram_logo_2022.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" alt="Instagram">
-          </a>
-        </div>
-      </div>
-      <!-- CONTACT US -->
-      <div class="footer-column contact-column">
-        <h3>Contact Us</h3>
-        <p>
-          <span class="icon">✉</span>
-          ceciliafoodies@gmail.com
-        </p>
-        <p>
-          <span class="icon">●</span>
-          Taytay, Rizal, Philippines
-        </p>
+<!-- FOOTER -->
+<footer class="footer">
+
+  <div class="footer-container">
+
+    <!-- LOGO -->
+    <div class="footer-logo">
+      <img src="New_logo.png" alt="Cecilia's Homemade Foodies Logo">
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="footer-column">
+      <h3>Quick Links</h3>
+      <a href="#">Home</a>
+      <a href="#">Menu</a>
+      <a href="#">Request</a>
+      <a href="#">About Us</a>
+    </div>
+
+    <!-- FOLLOW US -->
+    <div class="footer-column">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="#" class="social-link">
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/960px-2023_Facebook_icon.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" alt="Facebook">
+        </a>
+        <a href="#" class="social-link">
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/960px-Instagram_logo_2022.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" alt="Instagram">
+        </a>
       </div>
     </div>
-    <!-- COPYRIGHT -->
-    <div class="footer-bottom">
+
+    <!-- CONTACT US -->
+    <div class="footer-column contact-column">
+      <h3>Contact Us</h3>
       <p>
-        © 2025 Cecilia's Homemade Foodies.
-        All rights reserved.
-        <span class="heart">♡</span>
+        <span class="icon">✉</span>
+        ceciliafoodies@gmail.com
+      </p>
+      <p>
+        <span class="icon">●</span>
+        Taytay, Rizal, Philippines
       </p>
     </div>
-  </footer>
+  </div>
+
+  <!-- COPYRIGHT -->
+  <div class="footer-bottom">
+    <p>
+      © 2026 Cecilia's Homemade Foodies.
+      All rights reserved.
+      <span class="heart">♡</span>
+    </p>
+  </div>
+</footer>
 
 </body>
 </html>
