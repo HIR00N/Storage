@@ -1,5 +1,3 @@
-
-
 :root {
   --hp:            #E86A91;  /* header + footer pink */
   --accent:        #bd2e5c;  /* nav links, cart button, active tab */
@@ -15,8 +13,7 @@
   --font-title: "Timmana", sans-serif;
   --font-serif: "Jaini", serif;
 
-
-  --arrow-offset: -20px;
+  --arrow-offset: -20px;   /* negative = further OUTSIDE the row */
 }
 
 * {
@@ -127,7 +124,7 @@ a.Selected {
   width: 190px;
   height: auto;
   display: block;
-  filter: brightness(0) invert(1);  
+  filter: brightness(0) invert(1);  /* makes the pink logo appear white */
 }
 
 .footer-column {
@@ -237,31 +234,28 @@ a.Selected {
 
 /* ============================== CAROUSEL ============================= */
 
-/* FIXED: this rule had lost its selector line and the overlay's properties
-   (position: absolute, top/right/bottom, width: 10%...) were applied to
-   .carousel itself. That is what squeezed the whole row into a thin column.
-   .carousel only needs position: relative; the fade belongs to ::after. */
 .carousel {
   position: relative;
-  anchor-scope: --food-row;   
-  timeline-scope: --row-scroll; 
+  anchor-scope: --food-row;      /* each carousel gets its own anchor */
+  timeline-scope: --row-scroll;  /* ...and its own scroll timeline */
 }
 
-
+/* edge fades */
 .carousel::before,
 .carousel::after {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 10%;             
+  width: 10%;
   pointer-events: none;
   z-index: 1;
 }
+
 .carousel::before {
   left: 0;
   background: linear-gradient(to left, transparent, #fff5f5);
-  opacity: 0;             
+  opacity: 0;   /* hidden until you scroll */
 }
 
 .carousel::after {
@@ -273,73 +267,70 @@ a.Selected {
 @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
 
 @supports (animation-timeline: scroll()) {
-  
   .carousel::before {
     animation: fade-in linear both;
     animation-timeline: --row-scroll;
     animation-range: 0px 150px;
   }
 
- 
   .carousel::after {
     animation: fade-out linear both;
     animation-timeline: --row-scroll;
     animation-range: calc(100% - 150px) 100%;
   }
 }
+
+/* native scroll buttons (Chrome 135+) */
 .carousel .food-row::scroll-button(*) {
-    position: fixed;
-    position-anchor: --food-row;   /* NEW: tells the button which row to attach to */
-    top: anchor(center);
-    translate: 0 -50%;
-    z-index: 2;
-    width: 44px;
-    height: 44px;
-    border: none;
-    border-radius: 50%;
-    background-color: var(--accent);
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-    transition: 0.2s;
-  }
+  position: fixed;
+  position-anchor: --food-row;
+  top: anchor(center);
+  translate: 0 -50%;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--accent);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: 0.2s;
+}
 
-  .carousel .food-row::scroll-button(left) {
-    content: "\276E" / "Scroll left";
-    left: calc(anchor(left) + var(--arrow-offset));
-  }
+.carousel .food-row::scroll-button(left) {
+  content: "\276E" / "Scroll left";
+  left: calc(anchor(left) + var(--arrow-offset));
+}
 
-  .carousel .food-row::scroll-button(right) {
-    content: "\276F" / "Scroll right";
-    right: calc(anchor(right) + var(--arrow-offset));
-  }
+.carousel .food-row::scroll-button(right) {
+  content: "\276F" / "Scroll right";
+  right: calc(anchor(right) + var(--arrow-offset));
+}
 
-  .carousel .food-row::scroll-button(*):hover:not(:disabled) {
-    background-color: var(--accent-dark);
-  }
+.carousel .food-row::scroll-button(*):hover:not(:disabled) {
+  background-color: var(--accent-dark);
+}
 
-  .carousel .food-row::scroll-button(*):disabled {
-    opacity: 0.35;     /* greys out the arrow at the start / end of the row */
-    cursor: default;
-  }
+.carousel .food-row::scroll-button(*):disabled {
+  opacity: 0.35;
+  cursor: default;
+}
 
 .food-row {
   display: flex;
   gap: 25px;
   margin-bottom: 35px;
-  padding: 4px 0 12px;
+  padding: 4px 0 16px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent) transparent;
-  anchor-name: --food-row;    /* NEW: the native arrows position themselves against this */
+  anchor-name: --food-row;
   scroll-timeline: --row-scroll x;
-  scrollbar-width: auto;                        /* was thin, now normal size */
-  scrollbar-color: var(--accent) var(--tab-bg); /* pink handle on a light pink track */
-  overscroll-behavior-x: contain;               /* NEW */
-  padding-bottom: 16px;        
+  scrollbar-width: auto;
+  scrollbar-color: var(--accent) var(--tab-bg);
+  overscroll-behavior-x: contain;
 }
 
 .food-card {
@@ -359,8 +350,7 @@ a.Selected {
   display: block;
 }
 
-/* Fallback arrows (anchor links) for browsers without ::scroll-button,
-   e.g. Firefox and Safari. These still cause the page to jump. */
+/* Fallback arrows (anchor links) for browsers without ::scroll-button */
 .arrow {
   position: absolute;
   top: 50%;
@@ -390,17 +380,17 @@ a.Selected {
 #today-last,
 #menu-first,
 #menu-last {
-  scroll-margin-top: 150px;   
+  scroll-margin-top: 150px;   /* only matters for the fallback arrows */
+}
+
+/* hide the fallback arrows when native buttons exist (block is closed right away) */
+@supports selector(::scroll-button(left)) {
+  .arrow { display: none; }
 }
 
 
-@supports selector(::scroll-button(left)) {
+/* ====================== "SELECT MORE" CARD + POP-UP ================== */
 
-  .arrow { display: none; }   
-  
-
-
-/* ============================ MENU / CARDS =========================== */
 .more-card {
   display: flex;
   flex-direction: column;
@@ -408,6 +398,8 @@ a.Selected {
   justify-content: center;
   gap: 12px;
   min-height: 220px;
+  font: inherit;
+  cursor: pointer;
   text-decoration: none;
   color: var(--heading);
   background-color: var(--tab-bg);
@@ -427,7 +419,6 @@ a.Selected {
 }
 
 .more-text {
-  
   font-size: 18px;
   font-weight: bold;
 }
@@ -442,11 +433,64 @@ a.Selected {
   color: var(--accent);
 }
 
+.more-popup {
+  margin: auto;                    /* centers it on screen */
+  min-width: 80vw;                 /* at least 80% of the screen width */
+  min-height: 80vh;                /* at least 80% of the screen height */
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;                /* long content scrolls inside the pop-up */
+  padding: 30px;
+  border: none;
+  border-radius: 20px;
+  background-color: #fff5f5;
+  color: var(--text-pink);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.more-popup h2 {
+  color: var(--heading);
+  margin-bottom: 10px;
+}
+
+/* the blurred background */
+.more-popup::backdrop {
+  background: rgba(74, 44, 54, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+.popup-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--accent);
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.popup-close:hover {
+  background-color: var(--accent-dark);
+}
+
+/* stops the page scrolling behind the pop-up */
+body:has(.more-popup:popover-open) {
+  overflow: hidden;
+}
+
+
+/* ============================ MENU / CARDS =========================== */
+
 .food-info {
   padding: 12px 10px;
   font-size: 20px;
   color: var(--text-pink);
 }
+
 .food-name {
   font-weight: 500;
 }
@@ -502,7 +546,6 @@ a.Selected {
 
 /* ====================== RESPONSIVE: KEEP THESE LAST ================== */
 
-
 @media (max-width: 900px) {
   .food-card { flex: 0 0 calc((100% - 50px) / 2.35); }
 
@@ -522,7 +565,7 @@ a.Selected {
 }
 
 @media (max-width: 600px) {
-  :root { --arrow-offset: 6px; }   
+  :root { --arrow-offset: 6px; }   /* keeps the native arrows on-screen */
 
   .container { padding: 15px; }
 
@@ -540,7 +583,7 @@ a.Selected {
   }
 
   .menu-tabs { flex-wrap: wrap; }
-}  
+}
 
 @media (max-width: 550px) {
   .footer {
@@ -573,5 +616,4 @@ a.Selected {
   .footer-bottom {
     margin-top: 20px;
   }
-}
 }
